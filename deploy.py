@@ -73,21 +73,23 @@ if __name__ == '__main__':
 
     for key,value in cube_robo_pos.items():
         if lang.find(key) != -1:
-            dType.SetEndEffectorSuctionCup(api, 1, 1, isQueued = 0)
+            dType.SetEndEffectorSuctionCup(api, 1, 1, isQueued = 1)
             dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, value[0], value[1], -10, 85, isQueued=1)
             dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, value[0], value[1], -56, 85, isQueued=1)
-            lastIndex = dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, value[0], value[1], -10, 85, isQueued=1)[0]
-
+            dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, value[0], value[1], -10, 85, isQueued=1)
+            dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, value[0], value[1], 5, 85, isQueued=1)
+            dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 273.1274, -10.3756, 55, -2.1755, isQueued=1)
+            dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 273.1274, -10.3756, 50, -2.1755, isQueued=1)
+            lastIndex = dType.SetEndEffectorSuctionCup(api, 0, 1, isQueued = 1)[0]
             dType.SetQueuedCmdStartExec(api)
 
             while lastIndex > dType.GetQueuedCmdCurrentIndex(api)[0]:
-                dType.dSleep(100)
+                dType.dSleep(1000)
 
             dType.SetQueuedCmdStopExec(api)
-
             dType.SetQueuedCmdClear(api)
-            dType.SetEndEffectorSuctionCup(api, 0, 1, isQueued = 0)
+            
 
 
     dType.DisconnectDobot(api)
-    
+    # 273.1274,-10.3756,50,-2.1755
